@@ -19,3 +19,17 @@
         border-bottom-right-radius: .3rem;
     }
 }
+
+#form {
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+}
+.widget-container {
+    // display: flex;
+    text-align: center;
+    // margin-right: 70%;
+    justify-content: center;
+    // align-items: center;
+    height: 100vh auto
+}

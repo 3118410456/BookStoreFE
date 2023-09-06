@@ -6,24 +6,22 @@
 <div class="container-fluid">
 
     <div class="product-list">
-        <div *ngFor="let product of productList">
-            <div class=" product-item ">
+        <div *ngFor="let product of products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+            <div class="product-item">
                 <div class="product-top ">
-                    <a href=" " class="product-thumb ">
+                    <a routerLink="/product/{{product.id}}" class="product-thumb ">
                         <img src="{{ product.image }} " alt="{{ product.name }} " class="product-image ">
                     </a>
                     <div>By {{ product.genre}}</div>
                 </div>
 
-                <div class="product-info ">
-
+                <div routerLink="/product/{{product.id}}" class="product-info ">
                     <p href=" " class="product-name ">{{ product.title }}</p>
                     <div href=" " class="product-author ">{{ product.id}}</div>
                     <div href=" " class="product-price ">{{ product.price}}</div>
-                    <button class="addToCart " (click)="addToCart(product.title) ">them gio hang</button>
                 </div>
+                <button class="addToCart btn btn-primary" (click)="addToCart(product) ">Add to Cart</button>
             </div>
-
         </div>
     </div>
     <br><br>

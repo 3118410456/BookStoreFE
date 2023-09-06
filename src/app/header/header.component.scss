@@ -1,34 +1,43 @@
-// /* header.component.scss */
+/* header.component.scss */
 
-// /* Customize the background color and padding of the header */
-// .navbar {
-//   background-color: #f8f9fa;
-//   padding: 1rem 0;
-// }
+/* Customize the background color and padding of the header */
+.navbar {
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+}
 
-// /* Style the navigation links */
-// .navbar-nav .nav-link {
-//   color: #333;
-//   margin: 0 1rem;
-//   transition: color 0.3s ease-in-out;
-// }
+/* Style the navigation links */
+.navbar-nav .nav-link {
+  color: #333;
+  margin: 0 1rem;
+  transition: color 0.3s ease-in-out;
+}
 
-// .navbar-nav .nav-link:hover {
-//   color: #007bff;
-// }
+.navbar-nav .nav-link:hover {
+  color: #007bff;
+}
 
-// /* Style the brand logo */
-// .navbar-brand {
-//   font-weight: bold;
-//   color: #333;
-// }
+/* Style the brand logo */
+.navbar-brand {
+  font-weight: bold;
+  color: #333;
+}
 
-// /* Style the toggler icon */
-// .navbar-toggler-icon {
-//   background-color: #333;
-// }
+/* Style the toggler icon */
+.navbar-toggler-icon {
+  background-color: #333;
+}
 
-// /* Make the toggler icon white when the menu is open */
-// .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-//   background-color: #fff;
-// }
+/* Make the toggler icon white when the menu is open */
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background-color: #fff;
+}
+
+.dropdown-item{
+    text-transform: capitalize;
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
+  }
+  

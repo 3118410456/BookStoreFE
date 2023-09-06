@@ -1,5 +1,6 @@
 
 import { Component , OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-content',
@@ -9,6 +10,7 @@ import { Component , OnInit } from '@angular/core';
 export class ContentComponent implements OnInit{
   productList : any[] = [];
   products : any[] = [];
+  carts : any = this.getSesionStorage()
   itemsPerPage = 6;
   currentPage = 1;
   
@@ -16,8 +18,8 @@ export class ContentComponent implements OnInit{
     await fetch('https://fakestoreapi.com/products')
       .then(response => response.json())
       .then(json => {
-        this.productList = json;
-        console.log(this.productList)
+        this.products = json;
+        console.log(this.products)
         // for(let i=0 ; i < this.products.length ; i++)
         // {
         //   if (this.products[i].id % 2 ==0)
@@ -29,24 +31,58 @@ export class ContentComponent implements OnInit{
         //  this.productList = this.products.filter(product => product.id % 2 === 0);
         // console.log(this.productList)
       })
-      console.log(this.productList)
-  //     var request = new XMLHttpRequest();
-  //     request.open('GET', 'https://api.escuelajs.co/api/v1/products');
-  //     //request.setRequestHeader('Accept', 'application/json');
-  //     request.onload = () => { // Use an arrow function here
-  //       console.log(JSON.parse(request.response));
-  //       this.productList = JSON.parse(request.response); // 'this' refers to ContentComponent instance
-  //     };
-
-  //     request.send();
+      console.log(this.products)
   }
 
-  addToCart(product: any) : void {
-    alert('Đã thêm ' + product+ ' vào giỏ hàng')
+  getSesionStorage () {
+    let cartJSon = sessionStorage.getItem('cart')
+    console.log('CARTJSON :' + cartJSon)
+    if(cartJSon)
+    {
+      return  JSON.parse(cartJSon)
+    }
+    else {
+      return [];
+    }
   }
 
+
+  addToCart(product: any): void {
+    // alert('Đã thêm ' + product+ ' vào giỏ hàng')
+    let checkid = this.carts.find((res: any) => res.id == product.id)
+    
+    if(checkid)    {
+      checkid.quantity += 1;
+      }
+    else {
+      let cart:any = {
+        id : product.id,
+        title: product.title,
+        image : product.image,
+        quantity: 1,
+        price: product.price,
+        // subtotal : function () {
+        //   return cart.price * cart.quantity;
+        // }
+      }
+      // console.log(cart.subtotal())
+      this.carts.push(cart)
+      
+      console.log('abc' + cart.id)
+      
+      
+     
+    }
+    sessionStorage.setItem('cart' , JSON.stringify(this.carts))
+    console.log(this.carts)
+    Swal.fire({
+      title : 'Thêm '+ product.title +'vào giỏ hàng thành công !',
+      icon : 'success'
+    })
+  }
+    
   get pages(): number[] {
-    const pageCount = Math.ceil(this.productList.length / this.itemsPerPage);
+    const pageCount = Math.ceil(this.products.length / this.itemsPerPage);
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
 

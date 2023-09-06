@@ -10,7 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { DxButtonModule, DxDataGridModule, DxFormModule } from 'devextreme-angular';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CategoryComponent } from './category/category.component';
+import { ContactComponent } from './contact/contact.component';
+import { CartComponent } from './cart/cart.component';
+import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
 
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +26,11 @@ import { LoginComponent } from './login/login.component';
     ContentComponent,
     AboutComponent,
     LoginComponent,
+    ProductDetailComponent,
+    CategoryComponent,
+    ContactComponent,
+    CartComponent,
+    
   ],
   imports: [
     BrowserModule, 
@@ -26,7 +38,8 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     DxButtonModule,
     DxDataGridModule,
-    DxFormModule
+    DxFormModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

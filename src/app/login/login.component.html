@@ -8,17 +8,27 @@
 </div>
 
 <button (click)="onSubmit()" class="btn btn-primary ">Submit</button> -->
-<div id="form-demo">
-    <div class="widget-container">
-        <dx-form id="form" [(formData)]="ahihi">
-            <dxi-item dataField="user" editorType="dxTextBox" [editorOptions]="userOptions">
-
-            </dxi-item>
-            <dxi-item dataField="pass" editorType="dxTextBox" [editorOptions]="passOptions">
-
-            </dxi-item>
-        </dx-form>
-        <dx-button text="dang nahp" (onClick)="onSubmit()"></dx-button>
-    </div>
-
+<div class="widget-container">
+    <dx-form id="form" [(formData)]="login">
+        <dxi-item dataField="username" editorType="dxTextBox" [editorOptions]="userOptions">
+            
+        </dxi-item>
+        <dxi-item dataField="password" editorType="dxTextBox" [editorOptions]="passOptions">
+           
+        </dxi-item>
+    
+    </dx-form>
+    <br>
+    <dx-button text="Đăng nhập" (onClick)="onSubmit()"></dx-button>
 </div>
+
+
+<!-- <dxi-validation-rule
+  type="required"
+  message="Confirm Password is required"
+> -->
+<!-- </dxi-validation-rule> -->
+
+<!-- <label for="item-input">Add an item:</label>
+        <input type="text" id="item-input" #newItem>
+        <button type="button" (click)="addNewItem(newItem.value)">Add to parent's list</button> -->
