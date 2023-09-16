@@ -1,0 +1,92 @@
+<div class="container1">
+    <div class="left-panel">
+        <h2>Danh sách hóa đơn</h2>
+        <div class="filter-by-date form-datepicker">
+            <div class="datepicker">
+                <label for="startDate">Từ ngày:</label>
+                <input type="date" id="startDate" [(ngModel)]="startDate" class="form-control">
+            </div>
+            <div class="datepicker">
+                <label for="endDate">Đến ngày:</label>
+                <input type="date" id="endDate" [(ngModel)]="endDate" class="form-control">
+            </div>
+            <!-- <div> -->
+
+            <!-- <div class="btndiv">
+                    <button class="btn btn-secondary custom-button" (click)="onReset()">Reset</button>
+                    <button class="btn btn-success custom-button" (click)="filterByDate()">Lọc</button>
+                </div> -->
+
+            <!-- </div> -->
+        </div>
+
+        <div class="btn-search">
+
+            <div class="btndiv">
+                <button class="btn btn-secondary custom-button" (click)="onReset()">Reset</button>
+                <button class="btn btn-success custom-button" (click)="filterByDate()">Lọc</button>
+            </div>
+            <input class="form-control search ms-auto" type="text" [(ngModel)]="searchText" placeholder="Search...">
+        </div>
+        <br>
+        <table class="table table-bordered table-hover fixed-size-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">ID</th>
+                    <th style="width: 16%;">Tên khách hàng</th>
+                    <th style="width: 15%;">Ngày tạo</th>
+                    <th style="width: 14%;">SĐT</th>
+                    <th style="width: 35%;">Địa chỉ</th>
+                    <th style="width: 15%;">Tổng tiền</th>
+                    <!-- Thêm các cột khác tùy ý -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr (click)="handleRowClick(bill)" *ngFor="let bill of bills.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) | filter:searchText">
+                    <td>{{ bill.billID }}</td>
+                    <td>{{ bill.fullname }}</td>
+                    <td>{{ bill.date | date }}</td>
+                    <td>{{ bill.phone }}</td>
+                    <td>{{ bill.address }}</td>
+                    <td>{{ bill.subtotal }}</td>
+                    <!-- Định dạng ngày tạo -->
+                    <!-- Thêm các cột khác tùy ý -->
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Ô nhập số trang -->
+
+        <!-- Hiển thị nút Trang trước -->
+        <div class="pagination">
+            <button (click)="previousPage()" [disabled]="currentPage <= 1">Trang trước</button>
+            <input style="width: 10%;" type="number" [(ngModel)]="currentPage" (input)="goToPage()" min="1" max="{{ pageNumber }}">
+            <span> /{{ pageNumber }}</span>
+            <button (click)="nextPage()" [disabled]="currentPage >= pageNumber">Trang tiếp theo</button>
+        </div>
+    </div>
+    <hr width="2" size="500" color="black">
+
+    <div class="right-panel ">
+        <h2>Danh sách sản phẩm</h2>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Tên sách</th>
+                    <th style="width: 13%;">Số lượng</th>
+                    <th style="width: 15%;">Đơn giá</th>
+                    <th style="width: 15%;">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="billDetails">
+                <tr *ngFor="let billDetail of billDetails">
+                    <td>{{ billDetail.title }}</td>
+                    <td>{{ billDetail.quantity }}</td>
+                    <td>{{ billDetail.price}}</td>
+                    <td>{{ billDetail.quantity * billDetail.price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

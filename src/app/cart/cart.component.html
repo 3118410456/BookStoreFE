@@ -1,63 +1,72 @@
 <!-- cart.component.html -->
 <div class="cart">
-  <h2>Giỏ Hàng</h2>
-  <div class="col-md-9 mx-auto" *ngIf="carts.length">
-    <div class="button">
-      <button class="btn btn-success" routerLink="/home">Tiếp tục mua hàng</button>
-      <button class="btn btn-danger" (click)="removeAll()">Xóa toàn bộ giỏ hàng</button>
-    </div> 
-    <br><br>
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>STT</th>
-          <th>Ảnh</th>
-          <th>Tên SP</th>
-          <th>Số lượng</th>
-          <th>Đơn giá</th>
-          <th>Thành tiền</th>
-          <th></th> <!-- Cột cho nút Xóa -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cart of carts  ; let i = index">
-          <td>{{ i + 1 }}</td> <!-- STT -->
-          <td><img src="{{ cart.image }}" alt="cart.title" class="cart-image"></td> <!-- Ảnh -->
-          <td> {{ cart.title }} </td> <!-- Tên SP -->
-          <td> {{ cart.price }} </td> <!-- Đơn giá -->
-          <td style="display: flex;">
-            <button class="btn btn-danger" id="decreaseBtn" (click)="giamSL(i,cart.quantity)">-</button>
-            <!-- Input field -->
-            <input class="quantity" (change)="updateQuantity( i , $event)" type="number"
-              [value]="cart.quantity"><!-- Số lượng -->
-            <!-- Increase button -->
-            <button class="btn btn-success" id="increaseBtn" (click)="tangSL(i,cart.quantity)">+</button>
+    <h2>Giỏ Hàng</h2>
+    <br>
+    <div class="col-md-9 mx-auto" *ngIf="carts.length">
+        <div class="button">
+            <button class="btn btn-success" routerLink="/home">Tiếp tục mua hàng</button>
+            <button class="btn btn-danger ms-auto" (click)="removeAll()">Xóa toàn bộ giỏ hàng</button>
+        </div>
+        <br>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên SP</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th></th>
+                    <!-- Cột cho nút Xóa -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cart of carts  ; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <!-- STT -->
+                    <td><img src="{{ cart.image }}" alt="cart.title" class="cart-image"></td>
+                    <!-- Ảnh -->
+                    <td> {{ cart.title }} </td>
+                    <!-- Tên SP -->
+                    <td> {{ cart.price }} </td>
+                    <!-- Đơn giá -->
+                    <td style="display: flex;">
+                        <button class="btn btn-danger" id="decreaseBtn" (click)="giamSL(i,cart.quantity)">-</button>
+                        <!-- Input field -->
+                        <input class="quantity" (change)="updateQuantity( i , $event)" type="number" [value]="cart.quantity">
+                        <!-- Số lượng -->
+                        <!-- Increase button -->
+                        <button class="btn btn-success" id="increaseBtn" (click)="tangSL(i,cart.quantity)">+</button>
 
-          </td>
-          <td> {{ cart.quantity * cart.price }} </td> <!-- Thành tiền -->
-          <td><button class="btn btn-danger" (click)="removeItem(i)">Xóa</button></td> <!-- Nút Xóa -->
-        </tr>
-      </tbody>
-    </table>
-    <div class="col-md-5 mx-auto">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Tổng số lượng sản phẩm</th>
-            <th>Tổng tiền</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ getTotalQuantity() }}</td>
-            <td>{{ getTotalPrice() }}</td>
-          </tr>
-        </tbody>
-      </table>
+                    </td>
+                    <td> {{ cart.quantity * cart.price }} </td>
+                    <!-- Thành tiền -->
+                    <td><button class="btn btn-danger" (click)="removeItem(i)">Xóa</button></td>
+                    <!-- Nút Xóa -->
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-md-5 mx-auto">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Tổng số lượng sản phẩm</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ countTotalQuantity() }}</td>
+                        <td>{{ getTotalPrice() }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-success" (click)="toNavigatePayment()">Thanh toán</button>
+        </div>
     </div>
-  </div>
 
-  <div class="alert alert-warning" role="alert" *ngIf="carts.length == 0">
-    <strong>Giỏ hàng rỗng! </strong> <a routerLink="/home">Click vào đây để mua hàng</a>
-  </div>
+    <div class="alert alert-warning" role="alert" *ngIf="carts.length == 0">
+        <strong>Giỏ hàng rỗng! </strong> <a routerLink="/home">Click vào đây để mua hàng</a>
+    </div>
 </div>

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,8 +9,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailComponent {
   id: string ='';
+  quantity :number = 1
   productDetail : any = [];
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.params.subscribe(params => {
       this.id = params['id']; 
       console.log(this.id)
@@ -18,20 +20,46 @@ export class ProductDetailComponent {
 
   
   async ngOnInit() {
+    this.http.get(`https://localhost:44316/api/Books/${this.id}`).subscribe(data => {
+      this.productDetail = data;
+      console.log(this.productDetail)})
     
-    await fetch(`https://fakestoreapi.com/products/${this.id}`)
-      .then(response => response.json())
-      .then(json => {
-        this.productDetail = json;
-        console.log(this.productDetail)
-        console.log(this.id)
-       
-      })
       
+      
+  }
+
+  tangSL(i: any) {
+    if (i < 100) {
+      this.quantity += 1
+    } else this.quantity = 100;
+  //   sessionStorage.setItem('cart', JSON.stringify(this.carts))
+  }
+
+  giamSL(i : any) {
+    if (i > 1) {
+      this.quantity -= 1
+    } else this.quantity = 1;
+    // sessionStorage.setItem('cart', JSON.stringify(this.carts))
+  }
+
+  updateQuantity(event: any) {
+    let value = event.target.value;
+
+    if (value > 1 && value < 100) {
+      this.quantity = value        //Gioi han mua trong doan [1,100]
+    } else if (value < 1) {
+      this.quantity = 1;
+    } else if (value >= 100) {
+      this.quantity = 100;
+    }
+    // sessionStorage.setItem('cart', JSON.stringify(this.carts))
+    console.log(' value : ' + this.quantity);
   }
 
   addToCart() {
     // Implement your logic to add the product to the cart here
     alert(`Added ${this.productDetail.title}  to the cart.`);
   }
+
+  
 }

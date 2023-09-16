@@ -1,0 +1,43 @@
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+</head>
+
+
+<div class="container-fluid">
+    <h1>Tìm kiếm : '{{ searchText }}'</h1>
+    <div class="product-list">
+        <div *ngFor="let product of bookSearchs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+            <div class="product-item col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div routerLink="/product/{{product.bookID}}" class="product-top ">
+                    <a class="product-thumb ">
+                        <img src="{{ product.image }} " alt="{{ product.name }} " class="product-image ">
+                    </a>
+                </div>
+
+                <div class="product-info ">
+                    <p routerLink="/product/{{product.bookID}}" href=" " class="product-name ">{{ product.title }}</p>
+                    <div routerLink="/product/{{product.bookID}}" href=" " class="product-author ">Tác giả : {{ product.author}}</div>
+                    <div routerLink="/product/{{product.bookID}}" href=" " class="product-price ">{{ product.price}}</div>
+                </div>
+                <br>
+                <button class="addToCart btn btn-primary" (click)="addToCart(product) ">Thêm giỏ hàng</button>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination pagination justify-content-center ">
+            <li class="page-item " [class.disabled]="currentPage===1 ">
+                <a class="page-link " (click)="prevPage() " tabindex="-1 ">Previous</a>
+            </li>
+            <li class="page-item " *ngFor="let page of pages " [class.active]="currentPage===page ">
+                <a class="page-link " (click)="goToPage(page) ">{{ page }}</a>
+            </li>
+            <li class="page-item " [class.disabled]="currentPage===pages.length ">
+                <a class="page-link " (click)="nextPage() ">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

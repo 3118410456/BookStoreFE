@@ -1,0 +1,128 @@
+.container1 {
+    padding: 20px;
+    display: flex;
+    // margin: 20px;
+}
+
+.table {
+    width: 100%;
+    // flex: 7;
+    // border-collapse: collapse;
+    /* Để loại bỏ khoảng cách giữa ô */
+}
+
+.left-panel {
+    margin-right: 3%;
+    width: 65%;
+}
+
+.right-panel {
+    margin-left: 3%;
+    width: 35%;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    button {
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        &:hover {
+            background-color: #0056b3;
+        }
+        &:disabled {
+            background-color: #ccc;
+            // cursor: not-allowed;
+        }
+    }
+    .page-input {
+        width: 50px;
+        text-align: center;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin: 0 10px;
+        font-size: 14px;
+    }
+    span {
+        font-size: 20px;
+        margin-left: 10px;
+    }
+    button:first-child {
+        margin-right: 20px;
+    }
+    button:last-child {
+        margin-left: 20px;
+    }
+    .highlight {
+        background-color: #f0f0f0;
+        /* Change to your desired highlight color */
+    }
+}
+
+.form-datepicker {
+    display: flex;
+}
+
+.datepicker {
+    padding: 20px;
+    display: flex;
+}
+
+// .btn {
+//     margin-left: 50px;
+//     // margin-top: 45px;
+//     max-width: 50%;
+//     height: 50%;
+// }
+// .btndiv {
+//     display: flex;
+//     // margin-left: 0%;
+//     margin-left: 21.5%;
+//     margin-top: 50px;
+// }
+.custom-button {
+    // margin-top: 25px;
+    margin-left: 130px;
+    width: 100px;
+    height: 40px;
+    /* Điều này đặt khoảng cách 50px giữa các nút */
+}
+
+.fixed-size-table {
+    width: 100%;
+    /* Kích thước rộng của bảng */
+    border-collapse: collapse;
+    /* Loại bỏ khoảng cách giữa các ô */
+}
+
+
+/* Định dạng các ô trong bảng */
+
+.fixed-size-table th,
+.fixed-size-table td {
+    padding: 8px;
+    /* Khoảng cách giữa nội dung và biên của ô */
+    text-align: left;
+    /* Căn lề nội dung sang trái */
+    border: 1px solid #ccc;
+    /* Đường viền của ô */
+}
+
+.search {
+    width: 30%;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.btn-search {
+    display: flex;
+}

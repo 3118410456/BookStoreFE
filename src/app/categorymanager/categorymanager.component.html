@@ -1,0 +1,68 @@
+<h1>Quản lý loại sách(Categories Manager)</h1>
+<br>
+<div class="col-md-11 mx-auto" *ngIf="categoryJson.length">
+    <div class="btn-search">
+        <button (click)="openPopupAddCategory()" type="button" class="btn btn-primary btn-add" data-toggle="modal" data-target="#exampleModal">
+            Thêm loại sách
+        </button>
+        <input class="form-control ms-auto search" type="text" [(ngModel)]="searchText" placeholder="Search...">
+
+    </div>
+    <br>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Loại sách</th>
+                <th>Số lượng sách</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let category of categoryJson | filter:searchText  ; let i = index">
+                <ng-container *ngIf="category.status==1">
+                    <td>{{ i + 1 }}</td>
+                    <td> {{ category.name }} </td>
+                    <td>
+                        <ng-container *ngIf="bookByCategoryID[category.categoryID]">
+                            {{ bookByCategoryID[category.categoryID].quantity }}
+                        </ng-container>
+                    </td>
+
+                    <td>
+                        <button style="margin-right: 10px ;" (click)="openPopupUpdateCategory(category)" class="btn btn-success">Sửa</button>
+                        <button style="margin-left: 10px ;" (click)="deleteCategory(category)" class="btn btn-danger">Xóa</button>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Modal -->
+<div class="modal fade custom-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm loại sách</h5>
+                <button (click)="closePopupAddCategory()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <div class="container mt-9">
+                    <form>
+                        <div class="mb-9">
+                            <label for="title" class="form-label">Tên loại sách</label>
+                            <input type="text " class="form-control" name=" " [(ngModel)]="Category.name">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closePopupAddCategory()" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" (click)="addCategory()" *ngIf="mode">Thêm</button>
+                <button type="button" class="btn btn-primary" (click)="updateCategory()" *ngIf="!mode">Sửa</button>
+            </div>
+        </div>
+    </div>
+</div>

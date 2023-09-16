@@ -5,61 +5,82 @@
 </head> -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" routerLink="/home">My App</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <a class="navbar-brand" routerLink="/home">My App</a> -->
+        <img src="https://isachhay.net/wp-content/uploads/2018/08/logo3.png" class="navbar-brand imageLogo" routerLink="/home" alt="">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/home">Home</a>
+                <li class="nav-item" *ngIf="!isAdmin">
+                    <a class="nav-link" routerLink="/home">Trang chủ</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="categoryDropdown" role="button" data-bs-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">All Categories</a>
+                <li class="nav-item dropdown" *ngIf="!isAdmin">
+                    <a class="nav-link dropdown-toggle" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Các loại sách</a>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                         <!-- Dropdown items go here -->
                         <div *ngFor="let category of categories">
-                            <a routerLink = "category/{{category}}" class="dropdown-item">{{category}}</a>
+                            <a *ngIf="category.status==1" routerLink="category/{{category.categoryID}}" class="dropdown-item">{{category.name}}</a>
                         </div>
                         <!-- Add more categories as needed -->
                     </div>
                 </li>
-
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!isAdmin">
                     <a class="nav-link" routerLink="/about">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="!account" routerLink="/login">Login</a>
+                <li class="nav-item" *ngIf="!isAdmin">
+                    <a class="nav-link" routerLink="/contact">Liên hệ</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/contact">Contact</a>
+
+                <li class="nav-item" *ngIf="isAdmin">
+                    <a class="nav-link" routerLink="/bookManager">SÁCH</a>
                 </li>
                 <li class="nav-item" *ngIf="isAdmin">
-                    <a class="nav-link">Manager</a>
+                    <a class="nav-link" routerLink="/categoryManager">PHÂN LOẠI</a>
                 </li>
-                <ul>
-                    <li class="nav-item" *ngIf="account">
-                        <a class="nav-link">Hi {{account}}</a>
-                    </li>
-                    <li class="nav-item" *ngIf="account">
-                        <a class="nav-link" (click)="onLogout()">Log out</a>
-                    </li>
-                </ul>
-                <li>
-                    <a class="nav-link">
-                        Today's item: {{item}}
-                    </a>
+                <li class="nav-item" *ngIf="isAdmin">
+                    <a class="nav-link" routerLink="/billManager">HÓA ĐƠN</a>
                 </li>
-                <li>
+
+                <!-- Phan search -->
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" *ngIf="!account" routerLink="/login">Đăng nhập</a>
+                </li>
+                <li class="nav-item" *ngIf="account">
+                    <a class="nav-link">Xin chào : <strong>{{account}}</strong></a>
+                </li>
+                <li class="nav-item" style="cursor: pointer;" *ngIf="account">
+                    <a class="nav-link" (click)="onLogout()">Đăng xuất</a>
+                </li>
+                <li *ngIf="!isAdmin">
+                    <div class="dropdown">
+                        <input type="text" class="form-control" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [(ngModel)]="searchText" (input)="searchByName()" placeholder="Tìm kiếm tên sách..." (keyup.enter)="navigateToSearchPage()">
+                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                            <ng-container *ngIf="bookSearchs.length > 0; else noResults">
+                                <table class="table table-hover dropdown-item">
+                                    <tbody>
+                                        <tr *ngFor="let book of bookSearchs  ; let i = index">
+                                            <td><img src="{{ book.image }}" alt="book.title" class="book-image"></td>
+                                            <td> {{ book.title }} </td>
+                                            <td> {{ book.price }} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-container>
+                            <ng-template #noResults>
+                                <li class="dropdown-item">Không tìm thấy.</li>
+                            </ng-template>
+                        </div>
+                    </div>
+                </li>
+                <li style="padding-left: 30px;" *ngIf="!isAdmin">
                     <a class="nav-link" routerLink="/cart">
-                        Giỏ hàng
+                        Giỏ hàng : {{totalQuantity}}
                     </a>
                 </li>
             </ul>
-
-
         </div>
     </div>
 </nav>

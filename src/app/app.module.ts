@@ -14,10 +14,16 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CategoryComponent } from './category/category.component';
 import { ContactComponent } from './contact/contact.component';
 import { CartComponent } from './cart/cart.component';
-import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
+import { BookmanagerComponent } from './bookmanager/bookmanager.component';
+import { CategorymanagerComponent } from './categorymanager/categorymanager.component';
+import { BillmanagerComponent } from './billmanager/billmanager.component';
+import { PaymentComponent } from './payment/payment.component';
+import { DatePipe } from '@angular/common';
+import { SearchComponent } from './search/search.component';
+import { FilterPipe } from './filter.pipe';
 
- 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,10 +36,16 @@ import { FormsModule } from '@angular/forms';
     CategoryComponent,
     ContactComponent,
     CartComponent,
-    
+    BookmanagerComponent,
+    CategorymanagerComponent,
+    BillmanagerComponent,
+    PaymentComponent,
+    SearchComponent,
+    FilterPipe,
+
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     DxButtonModule,
@@ -41,7 +53,7 @@ import { FormsModule } from '@angular/forms';
     DxFormModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

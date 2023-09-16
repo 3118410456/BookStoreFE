@@ -1,5 +1,7 @@
 import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CartService } from '../service/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +14,7 @@ export class CartComponent implements OnInit {
   carts: any 
   // totalPrice: any 
   // totalQuantity: any = this.getTotalPrice()
-  constructor() { }
+  constructor(private route : Router, private cartService : CartService) { }
 
 
 
@@ -33,13 +35,15 @@ export class CartComponent implements OnInit {
 
     if (value > 1 && value < 100) {
       this.carts[i].quantity = value        //Gioi han mua trong doan [1,100]
-    } else if (value < 1) {
+    } else if (value <= 1) {
       this.carts[i].quantity = 1;
     } else if (value > 100) {
       this.carts[i].quantity = 100;
     }
     sessionStorage.setItem('cart', JSON.stringify(this.carts))
-    console.log('stt : ' + i + ' value : ' + this.carts[i].quantity);
+    // console.log('stt : ' + i + ' value : ' + this.carts[i].quantity);
+    let count = this.countTotalQuantity()
+    this.cartService.updateTotalQuantity(count)
   }
 
   tangSL(i: any, quantity: any) {
@@ -47,6 +51,9 @@ export class CartComponent implements OnInit {
       this.carts[i].quantity += 1
     } else this.carts[i].quantity = 100;
     sessionStorage.setItem('cart', JSON.stringify(this.carts))
+    let count = this.countTotalQuantity()
+    this.cartService.updateTotalQuantity(count)
+
   }
 
   giamSL(i: any, quantity: any) {
@@ -54,6 +61,8 @@ export class CartComponent implements OnInit {
       this.carts[i].quantity -= 1
     } else this.carts[i].quantity = 1;
     sessionStorage.setItem('cart', JSON.stringify(this.carts))
+    let count = this.countTotalQuantity()
+    this.cartService.updateTotalQuantity(count)
   }
 
 
@@ -88,20 +97,24 @@ export class CartComponent implements OnInit {
       if (result.isConfirmed) {
         // Perform the delete action here
         sessionStorage.removeItem('cart')
+        sessionStorage.removeItem('payment');
+        sessionStorage.removeItem('totalQuantity');
         this.carts = []
+        this.cartService.updateTotalQuantity(0)
 
         Swal.fire('ĐÃ XÓA!', 'TẤT CẢ Sản phẩm của bạn đã được xóa.', 'success');
       }
     });
   }
 
-  getTotalQuantity(): number {
+  countTotalQuantity(): number {
     let total = 0;
 
     this.carts.forEach((item: any) => {
       total += item.quantity
     });
     // this.totalQuantity = total;
+    sessionStorage.setItem('totalQuantity', JSON.stringify(total))
     return total;
   }
 
@@ -109,12 +122,22 @@ export class CartComponent implements OnInit {
     
     let total = 0;
     this.carts.forEach((item: any) => {
-      total += item.quantity * item.price
+      total += item.quantity * item.price      
     });
+    sessionStorage.setItem('payment', JSON.stringify(total))
     // console.log('cart : ' + this.carts)
     // console.log('abc '+ total)
     return total;
   }
 
+  toNavigatePayment() {
+    const login = sessionStorage.getItem('login')
+    if(login)
+    {
+      this.route.navigate(['/payment']);    
+    }else alert('Chưa đăng nhập')
+  }
+
+  
 
 }

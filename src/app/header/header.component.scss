@@ -1,43 +1,108 @@
 /* header.component.scss */
 
-/* Customize the background color and padding of the header */
 .navbar {
-  background-color: #f8f9fa;
-  padding: 1rem 0;
+    background-color: #f8f9fa;
+    padding: 1rem 0;
 }
 
-/* Style the navigation links */
 .navbar-nav .nav-link {
-  color: #333;
-  margin: 0 1rem;
-  transition: color 0.3s ease-in-out;
+    color: #333;
+    margin: 0 1rem;
+    transition: color 0.3s ease-in-out;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #007bff;
+    color: #007bff;
 }
 
-/* Style the brand logo */
 .navbar-brand {
-  font-weight: bold;
-  color: #333;
+    font-weight: bold;
+    color: #333;
 }
 
-/* Style the toggler icon */
 .navbar-toggler-icon {
-  background-color: #333;
+    background-color: #333;
 }
 
-/* Make the toggler icon white when the menu is open */
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  background-color: #fff;
+    background-color: #fff;
 }
 
-.dropdown-item{
+.dropdown-item {
     text-transform: capitalize;
 }
 
 .dropdown-item:hover {
     cursor: pointer;
-  }
-  
+}
+
+.search {
+    display: flex;
+}
+
+.container-fluid {
+    margin-top: 20px;
+}
+
+.addToCart {
+    margin-left: 95px;
+    display: block;
+    margin: 0 auto;
+}
+
+div.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 120%;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.book-image {
+    max-width: 40px;
+    max-height: 40px;
+    margin-right: 10px;
+}
+
+.book-title {
+    font-weight: bold;
+}
+
+.book-price {
+    color: #ff5733;
+}
+
+.dropdown-item {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    max-width: 500px;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+    /* Màu nền khi hover */
+}
+
+.imageLogo {
+    width: 10%;
+    height: auto;
+    // border-radius: 50%;
+}
+
+img:hover {
+    cursor: pointer;
+}
+
+.flex-fill {
+    flex: 1;
+}

@@ -1,34 +1,13 @@
-<!-- <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input class="form-control" id="username" aria-describedby="emailHelp" [(value)]="username">
-</div>
-<div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password" [(value)]="password">
-</div>
-
-<button (click)="onSubmit()" class="btn btn-primary ">Submit</button> -->
 <div class="widget-container">
     <dx-form id="form" [(formData)]="login">
         <dxi-item dataField="username" editorType="dxTextBox" [editorOptions]="userOptions">
-            
+
         </dxi-item>
         <dxi-item dataField="password" editorType="dxTextBox" [editorOptions]="passOptions">
-           
+
         </dxi-item>
-    
+
     </dx-form>
     <br>
-    <dx-button text="Đăng nhập" (onClick)="onSubmit()"></dx-button>
+    <dx-button text="Đăng nhập" (click)="onSubmit()"></dx-button>
 </div>
-
-
-<!-- <dxi-validation-rule
-  type="required"
-  message="Confirm Password is required"
-> -->
-<!-- </dxi-validation-rule> -->
-
-<!-- <label for="item-input">Add an item:</label>
-        <input type="text" id="item-input" #newItem>
-        <button type="button" (click)="addNewItem(newItem.value)">Add to parent's list</button> -->

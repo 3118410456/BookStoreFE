@@ -1,6 +1,9 @@
 
+import { HttpClient } from '@angular/common/http';
 import { Component , OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { CartService } from '../service/cart.service';
+import { count } from 'rxjs';
 
 @Component({
   selector: 'app-content',
@@ -9,32 +12,22 @@ import Swal from 'sweetalert2';
 })
 export class ContentComponent implements OnInit{
   productList : any[] = [];
-  products : any[] = [];
-  carts : any = this.getSesionStorage()
+  products : any = [];
+  carts : any = this.getSessionCart()
   itemsPerPage = 6;
   currentPage = 1;
+  constructor(private http: HttpClient,private cartService : CartService) {
+    
+  }
   
   async ngOnInit() {
-    await fetch('https://fakestoreapi.com/products')
-      .then(response => response.json())
-      .then(json => {
-        this.products = json;
-        console.log(this.products)
-        // for(let i=0 ; i < this.products.length ; i++)
-        // {
-        //   if (this.products[i].id % 2 ==0)
-        //   {
-        //     this.productList.push(this.products[i])
-        //   }
-        // }
-        // console.log(this.products.some(x=>x.id == 12));
-        //  this.productList = this.products.filter(product => product.id % 2 === 0);
-        // console.log(this.productList)
-      })
-      console.log(this.products)
+
+    this.http.get(`https://localhost:44316/api/Books`).subscribe(data => {
+      this.products = data;
+      console.log(this.products)})   
   }
 
-  getSesionStorage () {
+  getSessionCart (): any {
     let cartJSon = sessionStorage.getItem('cart')
     console.log('CARTJSON :' + cartJSon)
     if(cartJSon)
@@ -45,40 +38,64 @@ export class ContentComponent implements OnInit{
       return [];
     }
   }
-
+  
+  getSessionTotalQuantity (): any {
+    let cartJSon = sessionStorage.getItem('totalQuantity')
+    console.log('CARTJSON :' + cartJSon)
+    if(cartJSon)
+    {
+      return  JSON.parse(cartJSon)
+    }
+    else {
+      return 0;
+    }
+  }
 
   addToCart(product: any): void {
     // alert('Đã thêm ' + product+ ' vào giỏ hàng')
-    let checkid = this.carts.find((res: any) => res.id == product.id)
+    // console.log(this.carts);
+    let checkid = this.carts.find((res: any) =>  res.bookID == product.bookID)
+    console.log(checkid);
+    
     
     if(checkid)    {
       checkid.quantity += 1;
       }
     else {
       let cart:any = {
-        id : product.id,
+        bookID : product.bookID,
         title: product.title,
         image : product.image,
         quantity: 1,
         price: product.price,
-        // subtotal : function () {
-        //   return cart.price * cart.quantity;
-        // }
       }
-      // console.log(cart.subtotal())
       this.carts.push(cart)
       
-      console.log('abc' + cart.id)
-      
-      
-     
+      // console.log('abc' + cart.id) 
     }
+    let count = this.countTotalQuantity(this.carts)
+    
+    
     sessionStorage.setItem('cart' , JSON.stringify(this.carts))
+    sessionStorage.setItem('totalQuantity' , JSON.stringify(count))
+    
     console.log(this.carts)
     Swal.fire({
-      title : 'Thêm '+ product.title +'vào giỏ hàng thành công !',
+      title : 'Thêm '+ product.title +' vào giỏ hàng thành công !',
       icon : 'success'
     })
+  const total :any = this.getSessionTotalQuantity()
+
+    this.cartService.updateTotalQuantity(total)
+  }
+
+  countTotalQuantity(data:any) {
+    let count :any = 0;
+    data.forEach((res:any) => {
+      count += res.quantity
+    })
+    return count
+
   }
     
   get pages(): number[] {
