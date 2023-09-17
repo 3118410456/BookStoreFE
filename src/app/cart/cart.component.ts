@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/cor
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CartService } from '../service/cart.service';
+import { InputService } from '../service/input.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,7 @@ export class CartComponent implements OnInit {
   carts: any 
   // totalPrice: any 
   // totalQuantity: any = this.getTotalPrice()
-  constructor(private route : Router, private cartService : CartService) { }
+  constructor(private route : Router, private cartService : CartService, public inputService: InputService) { }
 
 
 
@@ -79,7 +80,8 @@ export class CartComponent implements OnInit {
         // Perform the delete action here
         this.carts.splice(i, 1);
         sessionStorage.setItem('cart', JSON.stringify(this.carts))
-
+        let count = this.countTotalQuantity()
+        this.cartService.updateTotalQuantity(count)
         Swal.fire('ĐÃ XÓA!', 'Sản phẩm của bạn đã được xóa.', 'success');
       }
     });

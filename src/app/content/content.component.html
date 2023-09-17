@@ -4,7 +4,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
 </head>
 <div class="container-fluid">
-
     <div class="product-list">
         <div *ngFor="let product of products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
             <div class="product-item col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -17,7 +16,7 @@
                 <div class="product-info ">
                     <p routerLink="/product/{{product.bookID}}" class="product-name ">{{ product.title }}</p>
                     <div routerLink="/product/{{product.bookID}}" class="product-author ">Tác giả : {{ product.author}}</div>
-                    <div routerLink="/product/{{product.bookID}}" class="product-price ">{{ product.price}}đ</div>
+                    <div routerLink="/product/{{product.bookID}}" class="product-price ">{{ inputService.formatNumber(product.price)}}đ</div>
                     <br>
                     <button class="addToCart btn btn-primary " (click)="addToCart(product) ">Thêm giỏ hàng</button>
                 </div>

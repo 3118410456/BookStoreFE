@@ -3,6 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { CategoryService } from '../service/category.service';
 import Swal from 'sweetalert2';
+import { BookService } from '../service/book.service';
 
 declare var window: any;
 
@@ -25,28 +26,26 @@ export class CategorymanagerComponent implements OnInit {
     status: 1
   }
   mode: any;
-  searchText:any;
+  searchText: any;
 
   // test :any = this.getQuantityCategory(1)
 
-  constructor(private http: HttpClient, private categoryService: CategoryService) { }
+  constructor(private http: HttpClient, private categoryService: CategoryService, private bookService: BookService) { }
 
   ngOnInit() {
 
     this.categoryService.getAllCategory().subscribe(data => {
       this.categoryJson = data
       this.categoryJson.forEach((category: any) => {
-        this.http
-          .get<any[]>(`https://localhost:44316/api/Books/Category/${category.categoryID}`)
-          .subscribe((data: any) => {
-            const books = data.filter((x: any) => x.categoryID == category.categoryID && x.status == 1)
-            // book.newProperty = "quantityCategoryByID"
-            this.bookByCategoryID[category.categoryID] = {
-              name: category.name,
-              quantity: books.length,
-            };
-          }
-          );
+        this.bookService.getBookByCategoryID(category.categoryID).subscribe((data: any) => {
+          const books = data.filter((x: any) => x.categoryID == category.categoryID && x.status == 1)
+          // book.newProperty = "quantityCategoryByID"
+          this.bookByCategoryID[category.categoryID] = {
+            name: category.name,
+            quantity: books.length,
+          };
+        }
+        );
       });
     })
 
@@ -70,8 +69,6 @@ export class CategorymanagerComponent implements OnInit {
   }
 
   openPopupUpdateCategory(data: any) {
-
-
     this.mode = false
     if (this.formCategory) {
       this.Category.categoryID = data.categoryID
@@ -130,8 +127,6 @@ export class CategorymanagerComponent implements OnInit {
   }
 
   async deleteCategory(data: any) {
-
-
     // console.log(this.Category);
     const result = await Swal.fire({
       title: 'Xác nhận XÓA tên loại sách',

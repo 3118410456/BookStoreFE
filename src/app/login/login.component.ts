@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Injectable } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../service/user.service';
+import Swal from 'sweetalert2';
 // import { ActivatedRoute, Route, Router } from '@angular/router';
 // import { DxFormComponent } from 'devextreme-angular';
 // import * as jQuery from 'jquery';
@@ -16,18 +19,18 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent {
-  // @ViewChild(DxFormComponent, { static: false }) form:DxFormComponent | undefined;
-  constructor(private route: Router, private http: HttpClient) { }
   bookByCategoryID: any = [];
-  input:any
+  input: any
   JSlogin: any = []
-  login: any = {
-    userID:0,
+  loginForm: any = {
+    userID: 0,
     username: "",
     password: "",
     name: "",
     role: ""
   }
+  messageError:any=false;
+
   confirmOptions: any = {
     labelMode: "floating",
     mode: "password"
@@ -40,67 +43,56 @@ export class LoginComponent {
     labelMode: "floating",
     mode: "password"
   }
-  async onSubmit() {
-    const account = this.JSlogin.find((x: any) => x.username == this.login.username && x.password == this.login.password)
-    if (account) {
-      if (account.status == 1) {
-        this.login.userID = account.userID;
-        this.login.name = account.fullname;
-        this.login.role = account.role
-        this.login.password = "" 
 
-        alert('Đăng nhập thành công.')
-        sessionStorage.setItem('login', JSON.stringify(this.login))
-        console.log(this.login)
-        if(this.login.role == 'admin')
-        {
-          await this.route.navigate(["/bookManager"]);
-        }else {
-          await this.route.navigate(["/home"]);
-        }
-        
-        location.reload();
-      }
-      else alert('Tài khoản của bạn đã bị khóa.')
-    } else {
-      alert('Tài khoản hoặc mặt khẩu không chính xác. ')
-    }
-
-
-  }
+  constructor(private route: Router, private http: HttpClient , private userService : UserService) {  }
 
   async ngOnInit() {
-    this.http.get(`https://localhost:44316/api/Users`).subscribe(data => {
+    this.userService.getAllUsers().subscribe(data => {
       this.JSlogin = data;
       console.log(this.JSlogin)
     })
   }
 
+  async onSubmit() {
 
-  // @Output() newUserEvent = new EventEmitter<string>();
-
-  // addNewUserName(value: string) {
-  //   console.log(value);
-  //   this.newUserEvent.emit(value);
-  //   console.log(value);
-  // }
-
-  // @Output() newItemEvent = new EventEmitter<string>();
-
-  // addNewItem(value: string) {
-  //   this.newItemEvent.emit(value);
-  // }
-
-  async getQuantityCategory() {
-    await this.http
-      .get(`https://localhost:44316/api/Books/Category/${this.input}`)
-      .subscribe((data) => {
-        this.bookByCategoryID = data;
-        // console.log(this.bookByCategoryID);
-        console.log(this.bookByCategoryID.length);
-        
-      });
-    
+    if(this.loginForm.username!='' && this.loginForm.password!='' )
+    {
+      this.messageError = false
+      const account = this.JSlogin.find((x: any) => x.username == this.loginForm.username && x.password == this.loginForm.password)
+      if (account) {
+        if (account.status == 1) {
+          this.loginForm.userID = account.userID;
+          this.loginForm.name = account.fullname;
+          this.loginForm.role = account.role
+          this.loginForm.password = ""
+  
+          sessionStorage.setItem('login', JSON.stringify(this.loginForm))
+          console.log(this.loginForm)
+          if (this.loginForm.role == 'admin') {
+            await this.route.navigate(["/bookManager"]);
+          } else {
+            await this.route.navigate(["/home"]);
+          }
+  
+          location.reload();
+        }
+        else {
+          Swal.fire({
+            title : 'Tài khoản của bạn đã bị khóa !',
+            icon : 'error'
+          })
+        }
+      } else {
+        console.log(this.messageError);        
+        Swal.fire({
+          title : 'Tài khoản hoặc mật khẩu không dúng !',
+          icon : 'warning'
+        })      }
+    }else if(this.loginForm.username=='' || this.loginForm.password=='' || this.loginForm.username==null || this.loginForm.password==null) {
+      this.messageError = true;
+      console.log(this.messageError);
+      
+    }
   }
 
 }

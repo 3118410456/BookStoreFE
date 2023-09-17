@@ -22,15 +22,14 @@
                         <div *ngFor="let category of categories">
                             <a *ngIf="category.status==1" routerLink="category/{{category.categoryID}}" class="dropdown-item">{{category.name}}</a>
                         </div>
-                        <!-- Add more categories as needed -->
                     </div>
                 </li>
-                <li class="nav-item" *ngIf="!isAdmin">
+                <!-- <li class="nav-item" *ngIf="!isAdmin">
                     <a class="nav-link" routerLink="/about">About</a>
-                </li>
-                <li class="nav-item" *ngIf="!isAdmin">
+                </li> -->
+                <!-- <li class="nav-item" *ngIf="!isAdmin">
                     <a class="nav-link" routerLink="/contact">Liên hệ</a>
-                </li>
+                </li> -->
 
                 <li class="nav-item" *ngIf="isAdmin">
                     <a class="nav-link" routerLink="/bookManager">SÁCH</a>
@@ -48,6 +47,9 @@
                 <li class="nav-item">
                     <a class="nav-link" *ngIf="!account" routerLink="/login">Đăng nhập</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" *ngIf="!account" routerLink="/register">Đăng kí</a>
+                </li>
                 <li class="nav-item" *ngIf="account">
                     <a class="nav-link">Xin chào : <strong>{{account}}</strong></a>
                 </li>
@@ -61,10 +63,10 @@
                             <ng-container *ngIf="bookSearchs.length > 0; else noResults">
                                 <table class="table table-hover dropdown-item">
                                     <tbody>
-                                        <tr *ngFor="let book of bookSearchs  ; let i = index">
+                                        <tr *ngFor="let book of bookSearchs  ; let i = index" (click)="navigateToBook(book.bookID)">
                                             <td><img src="{{ book.image }}" alt="book.title" class="book-image"></td>
                                             <td> {{ book.title }} </td>
-                                            <td> {{ book.price }} </td>
+                                            <td> {{ inputService.formatNumber(book.price) }}đ </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -77,7 +79,7 @@
                 </li>
                 <li style="padding-left: 30px;" *ngIf="!isAdmin">
                     <a class="nav-link" routerLink="/cart">
-                        Giỏ hàng : {{totalQuantity}}
+                        Giỏ hàng <span class="badge">{{ totalQuantity }}</span>
                     </a>
                 </li>
             </ul>

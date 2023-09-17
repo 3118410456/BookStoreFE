@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { BookmanagerService } from '../service/bookmanager.service';
+import { BookService } from '../service/book.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { InputService } from '../service/input.service';
 
 @Component({
   selector: 'app-search',
@@ -20,7 +21,7 @@ export class SearchComponent implements OnInit {
   currentPage = 1;
 
 
-  constructor(private bookService: BookmanagerService, private route: ActivatedRoute) {
+  constructor(private bookService: BookService, private route: ActivatedRoute , public inputService :InputService) {
     this.route.params.subscribe(params => {
       this.searchText = params['name'];
       console.log(this.searchText)

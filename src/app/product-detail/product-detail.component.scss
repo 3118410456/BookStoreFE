@@ -1,5 +1,9 @@
 .product-image {
     text-align: center;
+    border: 1px solid black;
+    max-width: 53%;
+    height: auto;
+    margin-left: 20%;
     img {
         max-width: 100%;
         height: auto;
@@ -36,4 +40,10 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    color: #e84a5f;
+    margin-top: 5px;
 }

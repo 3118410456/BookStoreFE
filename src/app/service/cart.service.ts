@@ -16,4 +16,28 @@ export class CartService {
     
     this.totalQuantitySubject.next(data);
   }
+
+  getSessionCart (): any {
+    let cartJSon = sessionStorage.getItem('cart')
+    console.log('CARTJSON :' + cartJSon)
+    if(cartJSon)
+    {
+      return  JSON.parse(cartJSon)
+    }
+    else {
+      return [];
+    }
+  }
+
+  getSessionTotalQuantity (): any {
+    let cartJSon = sessionStorage.getItem('totalQuantity')
+    console.log('CARTJSON :' + cartJSon)
+    if(cartJSon)
+    {
+      return  JSON.parse(cartJSon)
+    }
+    else {
+      return 0;
+    }
+  }
 }

@@ -25,6 +25,7 @@
     justify-content: center;
     // align-items: center;
 }
+
 .widget-container {
     // display: flex;
     text-align: center;
@@ -32,4 +33,23 @@
     justify-content: center;
     // align-items: center;
     height: 100vh auto
+}
+
+.form {
+    margin-top: 20px;
+    padding: 50px;
+    padding-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+    margin-left: 35%;
+    background-color: gray;
+    color: white;
+}
+
+.button:hover {
+    background-color: rgb(86, 86, 86);
 }

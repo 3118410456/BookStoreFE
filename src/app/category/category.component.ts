@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { InputService } from '../service/input.service';
 
 @Component({
   selector: 'app-category',
@@ -17,7 +18,7 @@ export class CategoryComponent {
   carts : any = this.getSesionStorage()
   itemsPerPage = 6;
   currentPage = 1;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, public inputService : InputService) {
 
   }
 

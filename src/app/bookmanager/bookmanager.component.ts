@@ -7,10 +7,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { BookmanagerService } from '../service/bookmanager.service';
+import { BookService } from '../service/book.service';
 import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { Router } from '@angular/router';
+import { CategoryService } from '../service/category.service';
 
 declare var window: any;
 
@@ -44,22 +45,21 @@ export class BookmanagerComponent implements OnInit {
   };
   select: any;
   review: any;
-  searchText:any;
+  searchText: any;
 
   constructor(
     private http: HttpClient,
-    private bookService: BookmanagerService,
-    private route: Router
+    private bookService: BookService,
+    private route: Router,
+    private categoryService: CategoryService
   ) { }
   async ngOnInit() {
-    this.http
-      .get('https://localhost:44316/api/Categories')
-      .subscribe((data) => {
+    this.categoryService.getAllCategory().subscribe((data) => {
         this.categories = data;
         console.log(this.categories);
       });
 
-    this.http.get('https://localhost:44316/api/Books').subscribe((data) => {
+      this.bookService.getAllBooks().subscribe((data) => {
       this.bookJS = data;
       console.log(this.bookJS);
     });

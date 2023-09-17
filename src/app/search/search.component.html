@@ -17,9 +17,9 @@
                 </div>
 
                 <div class="product-info ">
-                    <p routerLink="/product/{{product.bookID}}" href=" " class="product-name ">{{ product.title }}</p>
-                    <div routerLink="/product/{{product.bookID}}" href=" " class="product-author ">Tác giả : {{ product.author}}</div>
-                    <div routerLink="/product/{{product.bookID}}" href=" " class="product-price ">{{ product.price}}</div>
+                    <p routerLink="/product/{{product.bookID}}" class="product-name ">{{ product.title }}</p>
+                    <div routerLink="/product/{{product.bookID}}" class="product-author ">Tác giả : {{ product.author}}</div>
+                    <div routerLink="/product/{{product.bookID}}" class="product-price ">{{ inputService.formatNumber(product.price)}}đ</div>
                 </div>
                 <br>
                 <button class="addToCart btn btn-primary" (click)="addToCart(product) ">Thêm giỏ hàng</button>

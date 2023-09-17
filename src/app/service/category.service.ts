@@ -10,18 +10,18 @@ export class CategoryService {
   constructor(private http : HttpClient) { }
 
   getAllCategory(): Observable<any> {
-    return this.http.get('https://localhost:44316/api/Categories')
+    return this.http.get<any[]>('https://localhost:44316/api/Categories')
   }
 
   addCategory(data:any): Observable<any> {
-    return this.http.post('https://localhost:44316/api/Categories',data)
+    return this.http.post<any[]>('https://localhost:44316/api/Categories',data)
   }
 
   updateCategory(data:any): Observable<any> {
-    return this.http.put(`https://localhost:44316/api/Categories/${data.categoryID}`,data)
+    return this.http.put<any[]>(`https://localhost:44316/api/Categories/${data.categoryID}`,data)
   }
 
   deleteCategory(id:any): Observable<any> {
-    return this.http.delete(`https://localhost:44316/api/Categories/${id}`)
+    return this.http.delete<any[]>(`https://localhost:44316/api/Categories/${id}`)
   }
 }

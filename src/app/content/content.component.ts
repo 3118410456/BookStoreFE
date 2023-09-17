@@ -4,6 +4,8 @@ import { Component , OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CartService } from '../service/cart.service';
 import { count } from 'rxjs';
+import { InputService } from '../service/input.service';
+import { BookService } from '../service/book.service';
 
 @Component({
   selector: 'app-content',
@@ -13,51 +15,31 @@ import { count } from 'rxjs';
 export class ContentComponent implements OnInit{
   productList : any[] = [];
   products : any = [];
-  carts : any = this.getSessionCart()
+  carts : any = this.cartService.getSessionCart()
   itemsPerPage = 6;
   currentPage = 1;
-  constructor(private http: HttpClient,private cartService : CartService) {
+  constructor(
+    private http: HttpClient,
+    private cartService : CartService ,
+    public inputService :InputService,
+    private bookService : BookService
+    ) {
     
   }
   
   async ngOnInit() {
 
-    this.http.get(`https://localhost:44316/api/Books`).subscribe(data => {
+    this.bookService.getAllBooks().subscribe(data => {
       this.products = data;
       console.log(this.products)})   
   }
 
-  getSessionCart (): any {
-    let cartJSon = sessionStorage.getItem('cart')
-    console.log('CARTJSON :' + cartJSon)
-    if(cartJSon)
-    {
-      return  JSON.parse(cartJSon)
-    }
-    else {
-      return [];
-    }
-  }
-  
-  getSessionTotalQuantity (): any {
-    let cartJSon = sessionStorage.getItem('totalQuantity')
-    console.log('CARTJSON :' + cartJSon)
-    if(cartJSon)
-    {
-      return  JSON.parse(cartJSon)
-    }
-    else {
-      return 0;
-    }
-  }
 
   addToCart(product: any): void {
     // alert('Đã thêm ' + product+ ' vào giỏ hàng')
     // console.log(this.carts);
     let checkid = this.carts.find((res: any) =>  res.bookID == product.bookID)
     console.log(checkid);
-    
-    
     if(checkid)    {
       checkid.quantity += 1;
       }
@@ -70,12 +52,8 @@ export class ContentComponent implements OnInit{
         price: product.price,
       }
       this.carts.push(cart)
-      
-      // console.log('abc' + cart.id) 
     }
     let count = this.countTotalQuantity(this.carts)
-    
-    
     sessionStorage.setItem('cart' , JSON.stringify(this.carts))
     sessionStorage.setItem('totalQuantity' , JSON.stringify(count))
     
@@ -84,7 +62,7 @@ export class ContentComponent implements OnInit{
       title : 'Thêm '+ product.title +' vào giỏ hàng thành công !',
       icon : 'success'
     })
-  const total :any = this.getSessionTotalQuantity()
+  const total :any = this.cartService.getSessionTotalQuantity()
 
     this.cartService.updateTotalQuantity(total)
   }
@@ -95,7 +73,6 @@ export class ContentComponent implements OnInit{
       count += res.quantity
     })
     return count
-
   }
     
   get pages(): number[] {

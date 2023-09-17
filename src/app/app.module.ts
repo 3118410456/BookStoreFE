@@ -14,7 +14,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CategoryComponent } from './category/category.component';
 import { ContactComponent } from './contact/contact.component';
 import { CartComponent } from './cart/cart.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookmanagerComponent } from './bookmanager/bookmanager.component';
 import { CategorymanagerComponent } from './categorymanager/categorymanager.component';
 import { BillmanagerComponent } from './billmanager/billmanager.component';
@@ -22,6 +22,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { DatePipe } from '@angular/common';
 import { SearchComponent } from './search/search.component';
 import { FilterPipe } from './filter.pipe';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -42,6 +43,8 @@ import { FilterPipe } from './filter.pipe';
     PaymentComponent,
     SearchComponent,
     FilterPipe,
+    RegisterComponent,
+    
 
   ],
   imports: [
@@ -52,6 +55,7 @@ import { FilterPipe } from './filter.pipe';
     DxDataGridModule,
     DxFormModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

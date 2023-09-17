@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { BookmanagerService } from '../service/bookmanager.service';
+import { BookService } from '../service/book.service';
 import { CartService } from '../service/cart.service';
+import { InputService } from '../service/input.service';
 
 
 @Component({
@@ -19,7 +20,13 @@ export class HeaderComponent implements OnInit {
   bookSearchs: any = [];
   totalQuantity: any = 0;
 
-  constructor(private http: HttpClient, private bookService: BookmanagerService, private route: Router, private cartService : CartService) { }
+  constructor(
+    private http: HttpClient, 
+    private bookService: BookService, 
+    private route: Router, 
+    private cartService : CartService,
+    public inputService :InputService
+    ) { }
 
   async ngOnInit() {
 
@@ -69,6 +76,11 @@ export class HeaderComponent implements OnInit {
       this.cartService.updateTotalQuantity(storage)
       return JSON.parse(storage);
     }
+  }
+
+  navigateToBook(id:any) {
+    this.route.navigate([`/product/${id}`]).then(() => window.location.reload());
+    
   }
 
 

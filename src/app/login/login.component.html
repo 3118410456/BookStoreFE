@@ -1,5 +1,7 @@
-<div class="widget-container">
-    <dx-form id="form" [(formData)]="login">
+<div class="container col-4 form">
+
+    <dx-form id="form" [(formData)]="loginForm">
+
         <dxi-item dataField="username" editorType="dxTextBox" [editorOptions]="userOptions">
 
         </dxi-item>
@@ -9,5 +11,10 @@
 
     </dx-form>
     <br>
-    <dx-button text="Đăng nhập" (click)="onSubmit()"></dx-button>
+    <dx-button class="button" text="Đăng nhập" (click)="onSubmit()"></dx-button>
+    <br>
+    <br>
+    <div style="text-align: center;" class="alert alert-danger" role="alert" *ngIf="messageError">
+        Tài khoản và Mật khẩu không được bỏ trống !!!
+    </div>
 </div>

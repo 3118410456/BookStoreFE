@@ -12,11 +12,13 @@ import { CategorymanagerComponent } from './categorymanager/categorymanager.comp
 import { PaymentComponent } from './payment/payment.component';
 import { BillmanagerComponent } from './billmanager/billmanager.component';
 import { SearchComponent } from './search/search.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: 'home', component: ContentComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'product/:id', component: ProductDetailComponent },
   { path: 'category/:id', component: CategoryComponent },
